@@ -1,0 +1,51 @@
+{
+    "name"       : "narrowspark/http-message-util",
+    "type"       : "library",
+    "description": "This repository holds utility classes and constants to facilitate common operations of PSR-7.",
+    "keywords"   : [
+        "psr-7", "psr7", "http", "http-message-util", "util"
+    ],
+    "license"    : "MIT",
+    "homepage"   : "https://github.com/narrowspark/http-message-util",
+    "support"    : {
+        "issues"      : "https://github.com/narrowspark/http-message-util/issues",
+        "source"      : "https://github.com/narrowspark/http-message-util"
+    },
+    "authors"    : [
+        {
+            "name"    : "Daniel Bannert",
+            "email"   : "d.bannert@anolilab.de",
+            "homepage": "http://anolilab.de",
+            "role"    : "Developer"
+        }
+    ],
+    "require": {
+        "php"                                           : "^7.1",
+        "fig/http-message-util"                         : "^1.1",
+        "psr/http-message"                              : "^1.0"
+    },
+    "require-dev": {
+        "narrowspark/php-cs-fixer-config"               : "^2.0",
+        "phpunit/phpunit"                               : "^6.0",
+        "phpstan/phpstan"                               : "^0.8"
+    },
+    "provide": {
+        "psr/http-message-implementation"               : "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Narrowspark\\Http\\Message\\Util\\"        : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Narrowspark\\Http\\Message\\Util\\Tests\\" : "tests/"
+        }
+    },
+    "scripts": {
+        "cs"                                            : "sh vendor/bin/php-cs-fixer fix",
+        "phpstan"                                       : "sh vendor/bin/phpstan analyse -c phpstan.neon -l 6 src/"
+    },
+    "minimum-stability"                                 : "dev",
+    "prefer-stable"                                     : true
+}
