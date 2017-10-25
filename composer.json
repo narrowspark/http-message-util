@@ -8,8 +8,8 @@
     "license"    : "MIT",
     "homepage"   : "https://github.com/narrowspark/http-message-util",
     "support"    : {
-        "issues"      : "https://github.com/narrowspark/http-message-util/issues",
-        "source"      : "https://github.com/narrowspark/http-message-util"
+        "issues" : "https://github.com/narrowspark/http-message-util/issues",
+        "source" : "https://github.com/narrowspark/http-message-util"
     },
     "authors"    : [
         {
@@ -21,13 +21,14 @@
     ],
     "require": {
         "php"                                           : "^7.1",
-        "fig/http-message-util"                         : "^1.1",
         "psr/http-message"                              : "^1.0"
     },
     "require-dev": {
+        "guzzlehttp/psr7"                               : "1.4",
         "narrowspark/php-cs-fixer-config"               : "^2.0",
         "phpunit/phpunit"                               : "^6.0",
-        "phpstan/phpstan"                               : "^0.8"
+        "phpstan/phpstan"                               : "^0.8",
+        "viserio/http"                                  : "dev-master"
     },
     "provide": {
         "psr/http-message-implementation"               : "^1.0"
