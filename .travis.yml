@@ -11,7 +11,7 @@ matrix:
     - php: 7.1
       env: PHPSTAN=true
     - php: 7.2
-      env: PHPUNIT=true SEND_COVERAGE=true
+      env: PHPUNIT=true SEND_COVERAGE=true PHP_VERSION=7.2
   fast_finish: true
 
 cache:
@@ -27,6 +27,7 @@ before_script:
 
 install:
   - travis_retry composer install --no-interaction --prefer-dist --no-progress --profile --no-suggest
+  - if [[ "$PHP_VERSION" = 7.2 ]]; then composer req --dev viserio/http; fi
 
 script:
   - ./build/travis/script.sh
