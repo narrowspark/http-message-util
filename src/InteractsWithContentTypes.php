@@ -75,7 +75,7 @@ class InteractsWithContentTypes
      *
      * @return null|string
      */
-    public function prefers(array $contentTypes, MessageInterface $request): ?string
+    public static function prefers(array $contentTypes, MessageInterface $request): ?string
     {
         $accepts = self::getHeaderValuesFromString($request->getHeaderLine('Content-Type'));
 
@@ -89,11 +89,14 @@ class InteractsWithContentTypes
                 if (null !== $mimeType = self::getMimeType($contentType)) {
                     $type = $mimeType;
                 }
+
                 if (self::matchesType($type, $accept) || $accept === strtok($type, '/') . '/*') {
                     return $contentType;
                 }
             }
         }
+
+        return null;
     }
 
     /**

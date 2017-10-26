@@ -130,4 +130,59 @@ abstract class AbstractInteractsWithContentTypesTest extends TestCase
 
         self::assertFalse(InteractsWithContentTypes::accepts(['text/html'], $request));
     }
+
+    public function testPrefers(): void
+    {
+        $request = $this->request->withHeader('Content-Type', 'application/json');
+
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['json'], $request));
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['html', 'json'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/foo+json');
+
+        self::assertEquals('application/foo+json', InteractsWithContentTypes::prefers(['application/foo+json'], $request));
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['json'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/json;q=0.5, text/html;q=1.0');
+
+        self::assertEquals('html', InteractsWithContentTypes::prefers(['json', 'html'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/json;q=0.5, text/plain;q=1.0, text/html;q=1.0');
+
+        self::assertEquals('txt', InteractsWithContentTypes::prefers(['json', 'txt', 'html'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/*');
+
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['json'], $request));
+        self::assertEquals('application/json', InteractsWithContentTypes::prefers(['application/json'], $request));
+        self::assertEquals('application/xml', InteractsWithContentTypes::prefers(['application/xml'], $request));
+        self::assertNull(InteractsWithContentTypes::prefers(['text/html'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/json; charset=utf-8');
+
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['json'], $request));
+        self::assertEquals('application/json', InteractsWithContentTypes::prefers(['application/json'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/xml; charset=utf-8');
+
+        self::assertNull(InteractsWithContentTypes::prefers(['html', 'json'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/json, text/html');
+
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['html', 'json'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/json;q=0.4, text/html;q=0.6');
+
+        self::assertEquals('html', InteractsWithContentTypes::prefers(['html', 'json'], $request));
+        self::assertEquals('text/html', InteractsWithContentTypes::prefers(['text/html', 'application/json'], $request));
+        self::assertEquals('text/html', InteractsWithContentTypes::prefers(['application/json', 'text/html'], $request));
+
+        $request = $this->request->withHeader('Content-Type', 'application/json, text/html');
+
+        self::assertEquals('application/json', InteractsWithContentTypes::prefers(['text/html', 'application/json'], $request));
+
+        $request = $this->request->withHeader('Content-Type', '*/*; charset=utf-8');
+
+        self::assertEquals('json', InteractsWithContentTypes::prefers(['json'], $request));
+    }
 }

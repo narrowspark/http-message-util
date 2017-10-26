@@ -2,6 +2,10 @@ language: php
 
 sudo: false
 
+env:
+  global:
+    - TEST="./vendor/bin/phpunit"
+
 matrix:
   include:
     - php: 7.1

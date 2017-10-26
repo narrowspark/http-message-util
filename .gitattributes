@@ -1,5 +1,5 @@
 /bin                export-ignore
-/test               export-ignore
+/tests              export-ignore
 /.gitattributes     export-ignore
 /.gitignore         export-ignore
 /.php_cs            export-ignore
