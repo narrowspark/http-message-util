@@ -131,7 +131,7 @@ abstract class AbstractInteractsWithContentTypesTest extends TestCase
         self::assertFalse(InteractsWithContentTypes::accepts(['text/html'], $request));
     }
 
-    public function testPrefers()
+    public function testPrefers(): void
     {
         $request = $this->request->withHeader('Content-Type', 'application/json');
 
@@ -184,6 +184,5 @@ abstract class AbstractInteractsWithContentTypesTest extends TestCase
         $request = $this->request->withHeader('Content-Type', '*/*; charset=utf-8');
 
         self::assertEquals('json', InteractsWithContentTypes::prefers(['json'], $request));
-
     }
 }
