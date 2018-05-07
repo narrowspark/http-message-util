@@ -26,6 +26,15 @@ class InteractsWithContentTypes
     ];
 
     /**
+     * Private constructor; non-instantiable.
+     *
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * Determine if the request is sending JSON.
      *
      * @param \Psr\Http\Message\MessageInterface $request
@@ -80,17 +89,18 @@ class InteractsWithContentTypes
         $accepts = self::getHeaderValuesFromString($request->getHeaderLine('Content-Type'));
 
         foreach ($accepts as $accept) {
-            if (in_array($accept, ['*/*', '*'], true)) {
+            if (\in_array($accept, ['*/*', '*'], true)) {
                 return $contentTypes[0];
             }
 
             foreach ($contentTypes as $contentType) {
                 $type = $contentType;
+
                 if (null !== $mimeType = self::getMimeType($contentType)) {
                     $type = $mimeType;
                 }
 
-                if (self::matchesType($type, $accept) || $accept === strtok($type, '/') . '/*') {
+                if (self::matchesType($type, $accept) || $accept === \strtok($type, '/') . '/*') {
                     return $contentType;
                 }
             }
@@ -146,7 +156,7 @@ class InteractsWithContentTypes
 
         $split = \explode('/', $actual);
 
-        return isset($split[1]) && \preg_match('#' . \preg_quote($split[0], '#') . '/.+\+' . \preg_quote($split[1], '#') . '#', $type);
+        return isset($split[1]) && \preg_match('#' . \preg_quote($split[0], '#') . '\/.+\+' . \preg_quote($split[1], '#') . '#', $type);
     }
 
     /**

@@ -12,7 +12,7 @@ class ViserioPsr7InteractsWithAuthorizationTest extends AbstractInteractsWithAut
      */
     public function setUp(): void
     {
-        if (! class_exists(Request::class)) {
+        if (! \class_exists(Request::class)) {
             $this->markTestSkipped('Run composer req --dev viserio/http to test this test.');
         }
 
