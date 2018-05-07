@@ -21,6 +21,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "ext-mbstring": "*",
         "psr/http-message": "^1.0"
     },
     "provide": {
