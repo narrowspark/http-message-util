@@ -41,7 +41,7 @@ class InteractsWithDisposition
             }
         }
 
-        return $filenameFallback;
+        return $filenameFallback === '' ? $filename : $filenameFallback;
     }
 
     /**

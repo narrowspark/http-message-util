@@ -70,4 +70,15 @@ abstract class AbstractInteractsWithDispositionTest extends TestCase
             ['attachment', 'föö.html'],
         ];
     }
+
+    public function testEncodedFallbackFilename(): void
+    {
+        self::assertSame('', InteractsWithDisposition::encodedFallbackFilename(''));
+        self::assertSame('f___.html', InteractsWithDisposition::encodedFallbackFilename('fööö.html'));
+
+        $iso88591EncodedFilename = \utf8_decode('föö.html');
+        self::assertSame('f__.html', InteractsWithDisposition::encodedFallbackFilename($iso88591EncodedFilename));
+        self::assertSame('fooo.html', InteractsWithDisposition::encodedFallbackFilename('fooo.html'));
+        self::assertSame('fo__.html', InteractsWithDisposition::encodedFallbackFilename('foöä.html'));
+    }
 }
