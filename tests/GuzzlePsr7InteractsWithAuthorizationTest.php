@@ -4,7 +4,7 @@ namespace Narrowspark\Http\Message\Util\Tests;
 
 use GuzzleHttp\Psr7\ServerRequest;
 
-class GuzzelPsr7InteractsWithContentTypesTest extends AbstractInteractsWithContentTypesTest
+class GuzzlePsr7InteractsWithAuthorizationTest extends AbstractInteractsWithAuthorizationTest
 {
     /**
      * {@inheritdoc}

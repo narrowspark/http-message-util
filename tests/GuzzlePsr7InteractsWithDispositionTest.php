@@ -2,9 +2,9 @@
 declare(strict_types=1);
 namespace Narrowspark\Http\Message\Util\Tests;
 
-use GuzzleHttp\Psr7\ServerRequest;
+use GuzzleHttp\Psr7\Response;
 
-class GuzzelPsr7InteractsWithAcceptLanguageTest extends AbstractInteractsWithAcceptLanguageTest
+class GuzzlePsr7InteractsWithDispositionTest extends AbstractInteractsWithDispositionTest
 {
     /**
      * {@inheritdoc}
@@ -13,6 +13,6 @@ class GuzzelPsr7InteractsWithAcceptLanguageTest extends AbstractInteractsWithAcc
     {
         parent::setUp();
 
-        $this->request = new ServerRequest('GET', '/');
+        $this->response = new Response();
     }
 }

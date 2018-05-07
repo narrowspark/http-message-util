@@ -26,6 +26,15 @@ class InteractsWithContentTypes
     ];
 
     /**
+     * Private constructor; non-instantiable.
+     *
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * Determine if the request is sending JSON.
      *
      * @param \Psr\Http\Message\MessageInterface $request
@@ -80,7 +89,7 @@ class InteractsWithContentTypes
         $accepts = self::getHeaderValuesFromString($request->getHeaderLine('Content-Type'));
 
         foreach ($accepts as $accept) {
-            if (in_array($accept, ['*/*', '*'], true)) {
+            if (\in_array($accept, ['*/*', '*'], true)) {
                 return $contentTypes[0];
             }
 
@@ -90,7 +99,7 @@ class InteractsWithContentTypes
                     $type = $mimeType;
                 }
 
-                if (self::matchesType($type, $accept) || $accept === strtok($type, '/') . '/*') {
+                if (self::matchesType($type, $accept) || $accept === \strtok($type, '/') . '/*') {
                     return $contentType;
                 }
             }
