@@ -95,6 +95,7 @@ class InteractsWithContentTypes
 
             foreach ($contentTypes as $contentType) {
                 $type = $contentType;
+
                 if (null !== $mimeType = self::getMimeType($contentType)) {
                     $type = $mimeType;
                 }
@@ -155,7 +156,7 @@ class InteractsWithContentTypes
 
         $split = \explode('/', $actual);
 
-        return isset($split[1]) && \preg_match('#' . \preg_quote($split[0], '#') . '/.+\+' . \preg_quote($split[1], '#') . '#', $type);
+        return isset($split[1]) && \preg_match('#' . \preg_quote($split[0], '#') . '\/.+\+' . \preg_quote($split[1], '#') . '#', $type);
     }
 
     /**
