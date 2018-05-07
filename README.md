@@ -31,7 +31,7 @@ use Narrowspark\Http\Message\Util\InteractsWithAcceptLanguage;
 $request = new Request();
 $request = $request->withHeader('Accept-Language', 'zh, en-us; q=0.8, en; q=0.6');
 
-return InteractsWithAcceptLanguage::getLanguages($request); // ['zh', 'en', 'en_US']
+return InteractsWithAcceptLanguage::getLanguages($request); // => ['zh', 'en', 'en_US']
 
 ```
 
@@ -46,7 +46,7 @@ use Narrowspark\Http\Message\Util\InteractsWithAuthorization;
 $request = new Request();
 $request = $request->withHeader('Authorization', 'Basic QWxhZGRpbjpPcGVuU2VzYW1l');
 
-return InteractsWithAuthorization::getAuthorization($request); // ['Basic', 'QWxhZGRpbjpPcGVuU2VzYW1l']
+return InteractsWithAuthorization::getAuthorization($request); // => ['Basic', 'QWxhZGRpbjpPcGVuU2VzYW1l']
 
 ```
 
@@ -61,16 +61,56 @@ use Narrowspark\Http\Message\Util\InteractsWithContentTypes;
 $request = new Request();
 $request = $request->withHeader('Content-Type', 'application/json, */*');
 
-return InteractsWithContentTypes::isJson($request); // true
+return InteractsWithContentTypes::isJson($request); // => true
 
 $request = $request->withHeader('X-Pjax', 'true');
 
-return InteractsWithContentTypes::isPjax($request); // true
+return InteractsWithContentTypes::isPjax($request); // => true
 
 $request = $request->withHeader('X-Requested-With', 'XMLHttpRequest');
 
-return InteractsWithContentTypes::isAjax($request); // true
+return InteractsWithContentTypes::isAjax($request); // => true
 
+```
+
+Here's an example using the HeaderUtils class:
+``` php
+<?php
+declare(strict_types=1);
+
+use Narrowspark\Http\Message\Util\HeaderUtils;
+
+return HeaderUtils::split("da, en-gb;q=0.8", ",;"); // => array(array('da'), array('en-gb', 'q=0.8'))
+
+or
+
+return HeaderUtils::combine(array(array("foo", "abc"), array("bar"))); // => array("foo" => "abc", "bar" => true)
+
+or
+
+return HeaderUtils::toString(array("foo" => "abc", "bar" => true, "baz" => "a b c"), ",");  // => 'foo=abc, bar, baz="a b c"'
+
+or
+
+return HeaderUtils::quote('foo bar'); // => "foo bar"
+
+or
+
+return HeaderUtils::unquote('"foo bar"'); // => foo bar
+```
+
+Here's an example using the InteractsWithDisposition class:
+``` php
+<?php
+declare(strict_types=1);
+
+use Narrowspark\Http\Message\Util\InteractsWithDisposition;
+
+$response = new Response();
+
+$response = InteractsWithDisposition::makeDisposition($response, InteractsWithDisposition::DISPOSITION_ATTACHMENT, 'foo.html');
+
+return $response->getHeaderLine('Content-Disposition'); // => attachment; filename=foo.html
 ```
 
 Testing
