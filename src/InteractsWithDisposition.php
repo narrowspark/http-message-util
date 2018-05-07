@@ -27,10 +27,10 @@ class InteractsWithDisposition
     {
         $filenameFallback = '';
 
-        if (!\preg_match('/^[\x20-\x7e]*$/', $filename) || \strpos($filename, '%') !== false) {
+        if (! \preg_match('/^[\x20-\x7e]*$/', $filename) || \mb_strpos($filename, '%') !== false) {
             $encoding = \mb_detect_encoding($filename, null, true) ?: '8bit';
 
-            for ($i = 0, $filenameLength = \mb_strlen($filename, $encoding); $i < $filenameLength; ++$i) {
+            for ($i = 0, $filenameLength = \mb_strlen($filename, $encoding); $i < $filenameLength; $i++) {
                 $char = \mb_substr($filename, $i, 1, $encoding);
 
                 if ($char === '%' || \ord($char) < 32 || \ord($char) > 126) {
