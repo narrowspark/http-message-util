@@ -106,11 +106,14 @@ declare(strict_types=1);
 
 use Narrowspark\Http\Message\Util\InteractsWithDisposition;
 
-$response = new Response();
-
-$response = InteractsWithDisposition::makeDisposition($response, InteractsWithDisposition::DISPOSITION_ATTACHMENT, 'foo.html');
+$response = InteractsWithDisposition::appendDispositionHeader(new Response(), InteractsWithDisposition::DISPOSITION_ATTACHMENT, 'foo.html');
 
 return $response->getHeaderLine('Content-Disposition'); // => attachment; filename=foo.html
+
+or
+
+return InteractsWithDisposition::makeDisposition(InteractsWithDisposition::DISPOSITION_ATTACHMENT, 'foo.html'); // => attachment; filename=foo.html
+
 ```
 
 Testing

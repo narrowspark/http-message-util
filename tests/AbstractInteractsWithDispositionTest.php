@@ -17,7 +17,7 @@ abstract class AbstractInteractsWithDispositionTest extends TestCase
      */
     public function testMakeDispositionInvalidDisposition(): void
     {
-        InteractsWithDisposition::makeDisposition($this->response, 'invalid', 'foo.html');
+        InteractsWithDisposition::makeDisposition('invalid', 'foo.html');
     }
 
     /**
@@ -30,7 +30,7 @@ abstract class AbstractInteractsWithDispositionTest extends TestCase
      */
     public function testMakeDisposition(string $disposition, string $filename, string $filenameFallback, string $expected): void
     {
-        $response = InteractsWithDisposition::makeDisposition($this->response, $disposition, $filename, $filenameFallback);
+        $response = InteractsWithDisposition::appendDispositionHeader($this->response, $disposition, $filename, $filenameFallback);
 
         self::assertEquals($expected, $response->getHeaderLine('Content-Disposition'));
     }
@@ -56,7 +56,7 @@ abstract class AbstractInteractsWithDispositionTest extends TestCase
      */
     public function testMakeDispositionFail(string $disposition, string $filename): void
     {
-        InteractsWithDisposition::makeDisposition($this->response, $disposition, $filename);
+        InteractsWithDisposition::appendDispositionHeader($this->response, $disposition, $filename);
     }
 
     public function provideMakeDispositionFail(): array

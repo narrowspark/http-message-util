@@ -17,6 +17,15 @@ class InteractsWithDisposition
     public const DISPOSITION_INLINE = 'inline';
 
     /**
+     * Private constructor; non-instantiable.
+     *
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * A helper function for automatically encoded (ASCII) filename should be used for the fallback filename.
      *
      * @param string $filename
@@ -45,27 +54,22 @@ class InteractsWithDisposition
     }
 
     /**
-     * Generates a HTTP Content-Disposition field-value for the Response.
+     * Generates a HTTP Content-Disposition field-value.
      *
      * @see RFC 6266
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param string                              $disposition      One of "inline" or "attachment"
-     * @param string                              $filename         A unicode string
-     * @param string                              $filenameFallback A string containing only ASCII characters that
-     *                                                              is semantically equivalent to $filename. If the filename is already ASCII,
-     *                                                              it can be omitted, or just copied from $filename
+     * @param string $disposition      One of "inline" or "attachment"
+     * @param string $filename         A unicode string
+     * @param string $filenameFallback A string containing only ASCII characters that
+     *                                 is semantically equivalent to $filename. If the filename is already ASCII,
+     *                                 it can be omitted, or just copied from $filename
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return string
      */
-    public static function makeDisposition(
-        ResponseInterface $response,
-        string $disposition,
-        string $filename,
-        string $filenameFallback = ''
-    ): ResponseInterface {
+    public static function makeDisposition(string $disposition, string $filename, string $filenameFallback = ''): string
+    {
         if (! \in_array($disposition, [self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE], true)) {
             throw new \InvalidArgumentException(
                 \sprintf('The disposition must be either "%s" or "%s".', self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE)
@@ -101,9 +105,27 @@ class InteractsWithDisposition
             $params['filename*'] = "utf-8''" . \rawurlencode($filename);
         }
 
-        return $response->withHeader(
-            'Content-Disposition',
-            $disposition . '; ' . HeaderUtils::toString($params, ';')
-        );
+        return $disposition . '; ' . HeaderUtils::toString($params, ';');
+    }
+
+    /**
+     * Appends the content-disposition header to response.
+     *
+     * @see \Narrowspark\Http\Message\Util\InteractsWithDisposition::makeDisposition()
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string                              $disposition
+     * @param string                              $filename
+     * @param string                              $filenameFallback
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public static function appendDispositionHeader(
+        ResponseInterface $response,
+        string $disposition,
+        string $filename,
+        string $filenameFallback = ''
+    ): ResponseInterface {
+        return $response->withHeader('Content-Disposition', self::makeDisposition($disposition, $filename, $filenameFallback));
     }
 }
