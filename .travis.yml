@@ -29,6 +29,10 @@ jobs:
     - stage: Test
       php: 7.2
       env: REMOVE_XDEBUG=true
+      install:
+        - composer global require hirak/prestissimo
+        - $COMPOSER_UP
+        - composer require viserio/http:dev-master
 
     - stage: Coding standard
       php: 7.2
