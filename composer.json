@@ -28,7 +28,7 @@
         "psr/http-message-implementation": "^1.0"
     },
     "require-dev": {
-        "guzzlehttp/psr7": "1.4",
+        "guzzlehttp/psr7": "1.7.0",
         "narrowspark/php-cs-fixer-config": "^2.0",
         "phpstan/phpstan": "^0.9",
         "phpstan/phpstan-phpunit": "^0.9",
